@@ -6,7 +6,7 @@ import numpy as np
 import math
 import random
 
-# MAPA GRAFOS
+#MAPA GRAFOS calle
 
 class Nodo:
     def __init__(self, x, y, id):
@@ -52,7 +52,7 @@ class Grafo:
         glEnd()
         
         # Render edges
-        glColor3f(1.0, 1.0, 1.0)  # WHITE edges
+        glColor3f(1.0, 1.0, 1.0)  # WHITE calles
         glLineWidth(2.0)
         glBegin(GL_LINES)
         for nodo_origen, nodo_destino in self.aristas:

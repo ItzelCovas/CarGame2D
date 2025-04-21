@@ -15,10 +15,9 @@ from Carro import Carro
 from StreetMap import *
 
 opera = OpMat() #REGRESA UN APUNTADOR -> DIR DE MEMORIA DEL OBJETO
-#c1 = Carro(opera, [1.0, 1.0, 1.0], 10)  # Pasar una lista o tupla con dos valores
 
 carros = []
-ncarros = 6
+#ncarros = 6
 
 pygame.init()
 
@@ -94,7 +93,7 @@ def InitGrafo():
     
     
     #ARISTAS    
-    # Top row
+    #arriba
     graph.new_arista(0, 1, 2)  #derecha
     graph.new_arista(1, 0, 4)  #izq
     graph.new_arista(1, 2, 2)
@@ -104,7 +103,7 @@ def InitGrafo():
     graph.new_arista(3, 4, 2)
     graph.new_arista(4, 3, 4)
 
-    # en medio 
+    #en medio 
     graph.new_arista(5, 6, 2)
     graph.new_arista(6, 5, 4)
     graph.new_arista(6, 7, 2)
@@ -114,7 +113,7 @@ def InitGrafo():
     graph.new_arista(8, 9, 2)
     graph.new_arista(9, 8, 4)
 
-    # abajo 
+    #abajo 
     graph.new_arista(10, 11, 2)
     graph.new_arista(11, 10, 4)
     graph.new_arista(11, 12, 2)
@@ -125,61 +124,32 @@ def InitGrafo():
     graph.new_arista(14, 13, 4)
     
     for i in range(5):
-        graph.new_arista(i, i+5, 3)   # arriba to middle
-        graph.new_arista(i+5, i, 1)   # middle to arriba (reversa
+        graph.new_arista(i, i+5, 3)   #arriba to middle
+        graph.new_arista(i+5, i, 1)   #middle to arriba (reversa
         graph.new_arista(i+5, i+10, 3) #middle to abajo
         graph.new_arista(i+10, i+5, 1) #abajo to middle
     
     
     return graph
 
-def InitRobots(grafo):    
-    # carros.append(Carro(opera,[0.6, 0.2, 0.8],7,[-300,250],[1,0], grafo, 2, False)) #0
-    # carros.append(Carro(opera,[0.6, 0.2, 0.8],7,[-100,250],[1,0], grafo, 4, False)) #1
-    
-    # carros.append(Carro(opera,[0.6, 0.2, 0.8],7,[300,0],[-1,0], grafo, 2, False)) #2
-    
-    # carros.append(Carro(opera,[0.6, 0.2, 0.8],7,[-200,-250],[1,0], grafo, 2, False)) #3
-    
-    # carros.append(Carro(opera,[0.6, 0.2, 0.8],7,[-400,0],[0,-1], grafo, 4, False)) #4
-    
-    # carros.append(Carro(opera,[0.6, 0.2, 0.8],7,[200,-250],[1,0], grafo, 3, False)) #5
-    
-    # carros.append(Carro(opera,[0.6, 0.2, 0.8],7,[400,250],[-1,0], grafo, 4, False)) #6
-    
-    # carros.append(Carro(opera,[0.6, 0.2, 0.8],7,[400,-250],[0,1], grafo, 1, False)) #7
-    
-    # carros.append(Carro(opera,[0.6, 0.2, 0.8],7,[100,0],[-1,0], grafo, 4, False)) #8}
-    
-    # carros.append(Carro(opera,[0.6, 0.2, 0.8],7,[200,250],[0,-1], grafo, 2, False)) #9
-    
-    
-    # Top street (spaced apart)
+def InitRobots(grafo):      
     carros.append(Carro(opera,[0.6, 0.2, 0.8],7,[-350,250],[1,0], grafo, 2, False)) #0
     carros.append(Carro(opera,[0.6, 0.2, 0.8],7,[-50,250],[1,0], grafo, 4, False)) #1
     
-    # Middle street (opposite directions)
     carros.append(Carro(opera,[0.6, 0.2, 0.8],7,[350,0],[-1,0], grafo, 2, False)) #2
     
-    # Bottom street (spaced apart)
     carros.append(Carro(opera,[0.6, 0.2, 0.8],7,[-250,-250],[1,0], grafo, 2, False)) #3
     
-    # Vertical down (different x positions)
     carros.append(Carro(opera,[0.6, 0.2, 0.8],7,[-400,50],[0,-1], grafo, 4, False)) #4
     
-    # Bottom right (spaced from others)
     carros.append(Carro(opera,[0.6, 0.2, 0.8],7,[250,-250],[1,0], grafo, 3, False)) #5
     
-    # Top right (opposite flow)
     carros.append(Carro(opera,[0.6, 0.2, 0.8],7,[350,250],[-1,0], grafo, 4, False)) #6
     
-    # Bottom up (isolated)
     carros.append(Carro(opera,[0.6, 0.2, 0.8],7,[400,-200],[0,1], grafo, 2, False)) #7
     
-    # Middle left (spaced)
     carros.append(Carro(opera,[0.6, 0.2, 0.8],7,[150,0],[-1,0], grafo, 4, False)) #8
     
-    # Top down (isolated)
     carros.append(Carro(opera,[0.6, 0.2, 0.8],7,[200,200],[0,-1], grafo, 1, False)) #9
 
 
@@ -194,43 +164,8 @@ def display():
     for carrito in carros:
         carrito.render()
     c1.render()
-    # global deg
-    # global deg1
-    # global degrot
-    # global delta_degrot
-    # opera.push() # e0
-    # opera.rotate(degrot) # e1
-    # opera.scale(50,50) #e2
-    # t1.setColor(1.0, 1.0, 1.0)
-    # t1.render() 
-    # opera.pop() #e0
-    # opera.push() #e0
-    # opera.rotate(deg) #e3
-    # opera.translate(200,0) #e4
-    # opera.push() #e4
-    # opera.scale(50,50) #e5
-    # t1.setColor(1.0, 1.0, 1.0)
-    # t1.render() # e5
-    # opera.pop() #e4
-    # opera.push() #e4
-    # opera.rotate(deg1) #e6
-    # opera.translate(100,0) #e7
-    # opera.scale(20,20) #e8
-    # t1.render() #e8
-    # opera.pop() #e4
-    # opera.pop() #e0
-    # deg = deg + 1.0
-    # deg1 = deg1 + 3.0
-    # if deg > 360.0:
-    #     deg = deg % 360.0
-    # if deg1 > 360.0:
-    #     deg1 = deg1 % 360.0
-    # if degrot > 360.0:
-    #     degrot = degrot % 360.0
-    # else:
-    #     degrot = degrot + delta_degrot 
 
-# main program
+#main PROGRAM
 init()
 graph = InitGrafo()
 InitRobots(graph)

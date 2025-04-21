@@ -4,7 +4,6 @@ from pygame.locals import *
 # Cargamos las bibliotecas de OpenGL
 from OpenGL.GL import *
 from OpenGL.GLU import *
-from OpenGL.GLUT import *
 
 import random
 import math
@@ -32,7 +31,7 @@ class Carro:
         self.esc = esc * 0.8 #escala del carro
         self.pos = pos
         self.dir = dir
-        self.count_deg = 0 #90: left, -90: right
+        self.count_deg = 0 #90:izq, -90:der
         self.radio = math.sqrt((4.0 * esc)**2 + (2.0 * esc)**2) 
         self.colision = 0
         self.grafo = grafo
@@ -108,22 +107,21 @@ class Carro:
         else:
             self.dir[0] = round(self.dir[0])
             self.dir[1] = round(self.dir[1])
+            
             if (self.colision == 0 and self.count_deg == 0):
                 if not self.controlado:
                     id_origen = self.enNodo()
+                    
                     if id_origen != -1 and not self.yaGiro:
                         self.yaGiro = True
                         num_destinos = len(self.grafo.nodos[id_origen].destinos)
                         ind_destino = random.randint(0, num_destinos - 1)
                         id_destino = self.grafo.nodos[id_origen].destinos[ind_destino]
                         dir_arista = self.grafo.aristas[(id_origen, id_destino)]
-                        
-                        
-                        #turn logic
+                                                
                         if self.n_dir == dir_arista:
                             self.up()  #seguir derecho
                         else:
-                            # determinar si vulta der o izq 
                             if (dir_arista - self.n_dir) % 4 == 1:  #vuelta derecha
                                 self.setTurnLR(0)
                             else:  # vuelta izq
@@ -138,31 +136,7 @@ class Carro:
                     else:
                         self.yaGiro = False
                         self.up()
-    
-                
-    # def update(self):
-    #     if (self.colision == 0):
-    #         move = random.randint(1, 100)
-    #         if move > 2 and move < 100:
-    #             self.up()
-    #         if move == 1:
-    #             if (self.count_deg == 0):
-    #                 self.setTurnLR(0)
-    #         if move == 2:
-    #             if (self.count_deg == 0):
-    #                 self.setTurnLR(1)
-    #         if (self.count_deg > 0):
-    #             self.deg += 1
-    #             self.count_deg -= 1
-    #             self.dir[0] = (math.cos(math.radians(self.deg)))
-    #             self.dir[1] = (math.sin(math.radians(self.deg)))
-    #         if (self.count_deg < 0):
-    #             self.deg -= 1
-    #             self.count_deg += 1
-    #             self.dir[0] = (math.cos(math.radians(self.deg)))
-    #             self.dir[1] = (math.sin(math.radians(self.deg)))
-        
-        
+                        
         
     def render(self): 
         self.opera.push() #guardar estado de transformación
@@ -204,7 +178,7 @@ class Carro:
         glVertex2f(pointsR[19][0], pointsR[19][1])
         glEnd()
         
-        self.opera.pop()  #restaurar transformación
+        self.opera.pop() #restaurar transformación
         
     def distEuc(self, pos_1, pos_2):
         return math.sqrt((pos_2[0] - pos_1[0])**2 + (pos_2[1] - pos_1[1])**2)
@@ -215,7 +189,7 @@ class Carro:
         new_pos[1] += self.dir[1]
         new_pos = tuple(new_pos)
         dist_centros = self.distEuc(new_pos, carro.pos) #distancia euclidiana
-        #(umbral de colision)
+        #(radio colision)
         if (self.radio + carro.radio >= dist_centros) :
             self.colision = 1
         else:
